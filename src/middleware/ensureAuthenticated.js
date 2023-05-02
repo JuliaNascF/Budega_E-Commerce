@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import authConfig from "../configs/auth.js"
-import { db } from "../database/database.config.js";
+
 
 
 async function ensureAuthenticated(req, res, next) {

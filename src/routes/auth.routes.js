@@ -1,6 +1,7 @@
 import { Router }from "express"
-import AuthController  from "../controllers/auth.controllers.js";
+import AuthController  from "../controllers/AuthController.js";
 import ensureAuthenticated from "../middleware/ensureAuthenticated.js";
+import { userSchema } from "../schemas/auth.schemas.js";
 
 const authRouter = Router();
 const authController = new AuthController() ;
