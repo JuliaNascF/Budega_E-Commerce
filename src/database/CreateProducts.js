@@ -1,7 +1,8 @@
-
+import { ObjectId } from "mongodb"
 
   const productDocument = [
       {
+        _id: new ObjectId(),
         title: "Mesa de Jantar Retangular",
         Category: "Mesa",
         price: { cents: 2900, currency: "USD", discount: 0 }, 
@@ -12,9 +13,12 @@
           "https://livdecora.com.br/wp-content/uploads/2022/11/Conjunto-Arabela-500x355.jpg",
           
         ],
+
+        
       },
 
       {
+        _id: new ObjectId(),
         title: "Sofá Motorizado",
         Category: "Sofá",
         price: { cents: 2900, currency: "USD", discount: 0 }, 
@@ -30,6 +34,7 @@
       },
 
       {
+        _id: new ObjectId(),
         title: "Luminária de Mesa",
         Category: "Luminária",
         price: { cents: 2900, currency: "USD", discount: 0 },
@@ -44,6 +49,7 @@
 
 
       {
+        _id: new ObjectId(),
         title: "Cadeira Glamour",
         Category: "Cadeira",
         price: { cents: 2900, currency: "USD", discount: 0 }, 
