@@ -6,7 +6,9 @@ const productsRouter = Router();
 const productsController = new ProductsController() ;
 
 
-productsRouter.get("/:id", ensureAuthenticated, productsController.show);
+productsRouter.get("/", productsController.index);
+productsRouter.get("/id/:id", productsController.show);
+productsRouter.get("/:category", productsController.category);
 
 
 
