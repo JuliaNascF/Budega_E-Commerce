@@ -6,9 +6,6 @@ import { ObjectId } from 'mongodb';
 
     async category(req, res) {
       const { category } = req.params;
-     
-     
-      
       try {
         
         const produtos = await db.collection("products").find({ category } ).toArray();
