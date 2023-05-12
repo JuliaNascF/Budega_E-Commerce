@@ -29,15 +29,23 @@ class AuthController {
   async signIn(req, res) {
     console.log('Entrou na função signIn')
     const { email, password } = req.body;
+    
+
     try {
       const user = await db.collection("users").findOne({ email });
       if (!user) return res.status(404).send("Esse e-mail não possui cadastro!");
 
       const isPasswordCorrect = bcrypt.compareSync(password, user.password);
       if (!isPasswordCorrect) return res.sendStatus(401);
-
+      
       const session = await db.collection("sessions").insertOne({ userId: user._id });
-    
+
+      const { cart } = await db.collection("users").findOne(
+        { _id: user._id },
+        { projection: { cart: 1 } }
+      );
+      user.cart = cart;
+
     const token = jwt.sign({ userId: user._id }, authConfig.jwt.secret, {
       expiresIn: authConfig.jwt.expiresIn,
     });
@@ -46,11 +54,15 @@ class AuthController {
     } catch (err) {
       res.status(500).send(err.message);
     }
+
+
   }
 
   async signOut(req, res) {
-    const userId = req.userId; // assume que o objeto req tem um campo user com o ID do usuário
+    const userId = req.userId; 
     console.log(userId)
+    
+
     try {
      const result =  await db.collection("sessions").findOneAndDelete({ userId: new ObjectId(userId) });
      console.log(result)

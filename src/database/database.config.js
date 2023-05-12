@@ -2,8 +2,7 @@ import { MongoClient } from "mongodb";
 import productDocument from "./CreateProducts.js"
 
 
-
-const mongoClient = new MongoClient("mongodb+srv://JuliaNascF:mommy1212@cluster0.hq1sele.mongodb.net/Budega?retryWrites=true&w=majority")
+export const mongoClient = new MongoClient("mongodb+srv://JuliaNascF:mommy1212@cluster0.hq1sele.mongodb.net/Budega?retryWrites=true&w=majority")
 mongoClient.connect()
 .then(async () => {
   console.log("MongoDB conectado");
