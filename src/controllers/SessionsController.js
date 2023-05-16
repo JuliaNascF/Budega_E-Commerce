@@ -20,11 +20,11 @@ class SessionsController {
         return response.status(401).json({ message: "E-mail e/ou senha incorreta" });
       }
 
-      const { secret, expiresIn } = authConfig.jwt;
-      const token = jwt.sign({}, secret, {
-        subject: String(user._id),
-        expiresIn
+      const token = jwt.sign({ userId: user._id }, authConfig.jwt.secret, {
+        expiresIn: authConfig.jwt.expiresIn,
       });
+        console.log(`Token criado com userId ${user._id}`);
+      
 
       return response.json({ user, token });
     } catch (error) {

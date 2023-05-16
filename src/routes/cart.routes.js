@@ -8,6 +8,7 @@ const cartController = new CartController() ;
 
 
 cartRouter.post("/:id", ensureAuthenticated, cartController.addToCart);
+cartRouter.post("/decrease/:id", ensureAuthenticated, cartController.decreaseQuantity);
 cartRouter.get("/", ensureAuthenticated, cartController.getCart);
 
 

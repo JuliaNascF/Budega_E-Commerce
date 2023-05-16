@@ -46,11 +46,8 @@ class AuthController {
       );
       user.cart = cart;
 
-    const token = jwt.sign({ userId: user._id }, authConfig.jwt.secret, {
-      expiresIn: authConfig.jwt.expiresIn,
-    });
-      console.log(`Token criado com userId ${user._id}`);
-       res.json({user, token});
+  
+       res.json({user});
     } catch (err) {
       res.status(500).send(err.message);
     }
