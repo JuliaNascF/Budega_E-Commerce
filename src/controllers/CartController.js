@@ -84,6 +84,11 @@ class CartController {
   }
 }
 
+
+
+
+
+
   async  getCart(req, res) {
      const userId = req.userId;
 
@@ -101,7 +106,20 @@ class CartController {
       })
     );
 
-    res.status(200).send(cartItems);
+    let sum = 0;
+    cartItems.forEach((item) => {
+      const quantity = item.quantity || 1;
+      const price = item.product.price.cents;
+      const totalPrice = quantity * price;
+      sum += totalPrice;
+    });
+
+   const totalPriceFormatted = sum.toLocaleString('pt-BR', {
+  minimumFractionDigits: 2,
+  maximumFractionDigits: 2,
+});
+    res.status(200).json({ cartItems, total: `R$ ${totalPriceFormatted}` });
+
   } catch (err) {
     res.status(500).send(err.message);
   }
