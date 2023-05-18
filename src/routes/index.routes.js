@@ -3,6 +3,7 @@ import authRouter from "./auth.routes.js";
 import productsRouter from "./products.routes.js";
 import sessionsRouter from "./sessions.routes.js";
 import cartRouter from "./cart.routes.js";
+import favoritesRouter from "./favorites.routes.js";
 
 
 const router = Router();
@@ -11,6 +12,7 @@ const router = Router();
 router.use("/users",authRouter);
 router.use("/products",productsRouter);
 router.use("/cart", cartRouter);
-router.use("/sessions", sessionsRouter)
+router.use("/sessions", sessionsRouter);
+router.use("/favorites", favoritesRouter)
 
 export default router; 

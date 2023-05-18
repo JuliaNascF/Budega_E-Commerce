@@ -33,7 +33,7 @@ class CartController {
             { _id: new ObjectId(userId), "cart.items.productId": productId },
             { $inc: { "cart.items.$.quantity": 1 } }
           );
-          console.log(productAlreadyInCart);
+        
     
           // Consulta para obter as informações completas do produto
           product = await db.collection("products").findOne({ _id: productId });
@@ -42,7 +42,7 @@ class CartController {
             { _id: new ObjectId(userId) },
             { $push: { "cart.items": { productId: productId, quantity: 1 } } }
           );
-          console.log("prod diferente");
+        
     
           // Consulta para obter as informações completas do produto
           product = await db.collection("products").findOne({ _id: productId });
