@@ -84,9 +84,32 @@ class CartController {
   }
 }
 
+async removeFromCart(req, res) {
+  const userId = req.userId;
+  const productId = new ObjectId(req.params.id);
 
+  try {
+    const user = await db.collection("users").findOne(
+      { _id: new ObjectId(userId) },
+      { projection: { cart: 1, _id: 0 } }
+    );
+    if (!user) return res.status(404).send("Usuário não encontrado");
 
+    const cartItemIndex = user.cart.items.findIndex(
+      (item) => item.productId && item.productId.toString() === productId.toString()
+    );
+    if (cartItemIndex === -1) return res.status(404).send("Produto não encontrado no carrinho");
 
+    await db.collection("users").updateOne(
+      { _id: new ObjectId(userId) },
+      { $pull: { "cart.items": { productId: productId } } }
+    );
+
+    res.sendStatus(200);
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
+}
 
 
   async  getCart(req, res) {
