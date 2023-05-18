@@ -51,6 +51,36 @@ class FavoriteController {
 
   }
 
+  async removeFavorites(req, res) {
+    const userId = req.userId;
+  const productId = new ObjectId(req.params.id);
+
+  try {
+    const user = await db.collection("users").findOne({ _id: new ObjectId(userId) });
+    if (!user) return res.status(404).send("Usuário não encontrado!");
+
+    const { favorites } = user;
+
+    const stringProductId = productId.toString();
+
+    if (!favorites.some(favoriteId => favoriteId.toString() === stringProductId)) {
+      return res.status(404).send("Produto não encontrado nos favoritos!");
+    }
+
+    // Remove o produto dos favoritos do usuário
+    const updatedFavorites = favorites.filter(favoriteId => favoriteId.toString() !== stringProductId);
+
+    // Atualiza o campo 'favorites' no documento do usuário
+    await db.collection("users").updateOne(
+      { _id: new ObjectId(userId) },
+      { $set: { favorites: updatedFavorites } }
+    );
+
+    res.status(200).send("Produto removido dos favoritos com sucesso!");
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
+  }
 
 }
 export default FavoriteController;
