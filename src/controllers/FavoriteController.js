@@ -82,5 +82,28 @@ class FavoriteController {
   }
   }
 
+  async checkFavoriteStatus(req, res) {
+    const userId = req.userId;
+    const productId = new ObjectId(req.params.id);
+  
+    try {
+      const user = await db.collection("users").findOne({ _id: new ObjectId(userId) });
+      if (!user) return res.status(404).send("Usuário não encontrado!");
+  
+      const { favorites } = user;
+  
+      const stringProductId = productId.toString();
+  
+      if (favorites.some(favoriteId => favoriteId.toString() === stringProductId)) {
+        res.status(200).json({ isFavorite: true });
+      } else {
+        res.status(200).json({ isFavorite: false });
+      }
+    } catch (err) {
+      res.status(500).send(err.message);
+    }
+  }
+  
+
 }
 export default FavoriteController;
