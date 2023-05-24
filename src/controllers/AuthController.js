@@ -1,11 +1,6 @@
 import { db } from "../database/database.config.js";
 import  bcrypt  from "bcryptjs";
-import jwt from "jsonwebtoken";
 import { ObjectId } from 'mongodb';
-
-
-import authConfig from "../configs/auth.js"
-
 
 
 class AuthController {
@@ -17,6 +12,7 @@ class AuthController {
       if (user) return res.status(409).send("Esse e-mail já foi cadastrado!");
       const cart = { items: [] };
       const favorites = [];
+   
 
       const hash = bcrypt.hashSync(password, 10);
       const result = await db.collection("users").insertOne({ name, email, password: hash, cart, favorites });
@@ -53,6 +49,7 @@ class AuthController {
       );
       user.favorites = favorites;
   
+
        res.json({user});
     } catch (err) {
       res.status(500).send(err.message);
