@@ -1,12 +1,12 @@
-import joi from "joi"
+import Joi from "joi"
 
-export const userSchema = joi.object({
-    name: joi.string().required(),
-    email: joi.string().email().required(),
-    password: joi.string().min(6).required(),
-})
+export const userSchema = Joi.object({
+    name: Joi.string().required().error(new Error("O nome é obrigatório")),
+    email: Joi.string().email().required().error(new Error("O email é inválido")),
+    password: Joi.string().min(6).required().error(new Error("A senha deve ter pelo menos 6 caracteres")),
+  });
 
-export const loginSchema = joi.object({
-    email: joi.string().email().required(),
-    password: joi.string().min(6).required(),
-})
+  export const loginSchema = Joi.object({
+    email: Joi.string().email().required().error(new Error("O email é inválido")),
+    password: Joi.string().min(6).required().error(new Error("A senha deve ter pelo menos 6 caracteres")),
+  });
